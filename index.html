@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mango Roster</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Mango Roster</h1>
+    <p>Manage work schedules for your employees</p>
+
+    <!-- Tabla de horarios -->
+    <table>
+      <thead>
+        <tr>
+          <th>Días</th>
+          <th v-for="employee in employees" :key="employee">{{ employee }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(day, index) in days" :key="index">
+          <td>{{ day }}</td>
+          <td v-for="(shift, empIndex) in schedule[index]" :key="empIndex">
+            <input type="checkbox" v-model="schedule[index][empIndex]" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Botón para generar el horario -->
+    <button @click="generateRoster">Generar</button>
+
+    <!-- Tabla de totales -->
+    <h2>Total de horas trabajadas</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Empleado</th>
+          <th>Total Horas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(employee, index) in employees" :key="employee">
+          <td>{{ employee }}</td>
+          <td>{{ calculateTotalHours(index) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Script de la lógica Vue -->
+  <script src="app.js"></script>
+</body>
+</html>
